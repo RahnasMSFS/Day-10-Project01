@@ -1,0 +1,139 @@
+MariaDB [(none)]> create database admin;
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [(none)]> use admin;
+Database changed
+
+MariaDB [admin]> create user 'hospital'@'localhost' identified by '123';
+Query OK, 0 rows affected (0.009 sec)
+
+MariaDB [admin]> grant all on admin.* to 'hospital'@'localhost';
+Query OK, 0 rows affected (0.003 sec)
+
+MariaDB [admin]> exit;
+Bye
+
+
+# mysql -u hospital -p
+Enter password: ***
+
+MariaDB [(none)]> use admin;
+Database changed
+
+MariaDB [admin]> show tables;
++-----------------+
+| Tables_in_admin |
++-----------------+
+| doctor          |
+| hospital        |
+| nurse           |
++-----------------+
+3 rows in set (0.001 sec)
+
+MariaDB [admin]> desc doctor;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| did      | int(11)      | NO   | PRI | NULL    |       |
+| grade    | varchar(255) | YES  |     | NULL    |       |
+| name     | varchar(255) | YES  |     | NULL    |       |
+| phone_no | int(11)      | NO   |     | NULL    |       |
+| salary   | int(11)      | NO   |     | NULL    |       |
+| hos_id   | int(11)      | YES  | MUL | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+6 rows in set (0.022 sec)
+
+MariaDB [admin]> desc nurse;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| nid    | int(11)      | NO   | PRI | NULL    |       |
+| name   | varchar(255) | YES  |     | NULL    |       |
+| salary | int(11)      | NO   |     | NULL    |       |
+| hos_id | int(11)      | YES  | MUL | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+4 rows in set (0.018 sec)
+
+MariaDB [admin]> desc hospital;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| hid      | int(11)      | NO   | PRI | NULL    |       |
+| location | varchar(255) | YES  |     | NULL    |       |
+| name     | varchar(255) | YES  |     | NULL    |       |
+| noof_emp | int(11)      | NO   |     | NULL    |       |
+| type     | varchar(255) | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+5 rows in set (0.018 sec)
+
+
+MariaDB [admin]> insert into hospital values(1,"Kalmunai","AMH",450,"GH");
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [admin]> insert into hospital values(2,"Kalmunai","MediLand",100,"PH");
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [admin]> insert into nurse values(1,"Rismi",100000,1);
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [admin]> insert into nurse values(2,"Ravi",19000,2);
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [admin]> insert into doctor values(2,"Doctor","Shiyab",0779023400,70000,2);
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [admin]> insert into doctor values(1,"Sergeon","Raveendran",0776123400,100000,1);
+Query OK, 1 row affected (0.003 sec)
+
+
+
+MariaDB [admin]> select * from nurse;
++-----+-------+--------+--------+
+| nid | name  | salary | hos_id |
++-----+-------+--------+--------+
+|   1 | Rismi | 100000 |      1 |
+|   2 | Ravi  |  19000 |      2 |
++-----+-------+--------+--------+
+2 rows in set (0.000 sec)
+
+MariaDB [admin]> select * from doctor;
++-----+---------+------------+-----------+--------+--------+
+| did | grade   | name       | phone_no  | salary | hos_id |
++-----+---------+------------+-----------+--------+--------+
+|   1 | Sergeon | Raveendran | 776123400 | 100000 |      1 |
+|   2 | Doctor  | Shiyab     | 779023400 |  70000 |      2 |
++-----+---------+------------+-----------+--------+--------+
+2 rows in set (0.001 sec)
+
+MariaDB [admin]> select * from hospital;
++-----+----------+----------+----------+------+
+| hid | location | name     | noof_emp | type |
++-----+----------+----------+----------+------+
+|   1 | Kalmunai | AMH      |      450 | GH   |
+|   2 | Kalmunai | MediLand |      100 | PH   |
++-----+----------+----------+----------+------+
+2 rows in set (0.000 sec)
+
+MariaDB [admin]> select * from hospital;
++-----+----------+------+----------+------+
+| hid | location | name | noof_emp | type |
++-----+----------+------+----------+------+
+|   1 | Kalmunai | AMH  |      450 | GH   |
++-----+----------+------+----------+------+
+1 row in set (0.000 sec)
+
+MariaDB [admin]> select * from nurse;
++-----+-------+--------+--------+
+| nid | name  | salary | hos_id |
++-----+-------+--------+--------+
+|   1 | Rismi | 100000 |      1 |
++-----+-------+--------+--------+
+1 row in set (0.001 sec)
+
+MariaDB [admin]> select * from doctor;
++-----+---------+------------+-----------+--------+--------+
+| did | grade   | name       | phone_no  | salary | hos_id |
++-----+---------+------------+-----------+--------+--------+
+|   1 | Sergeon | Raveendran | 776123400 | 100000 |      1 |
++-----+---------+------------+-----------+--------+--------+
+1 row in set (0.001 sec)
